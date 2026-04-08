@@ -533,10 +533,12 @@ async function doRegister() {
   if (!email)         { showAuthError('Preencha o e-mail.'); return; }
   if (pass.length < 6){ showAuthError('Senha mínima de 6 caracteres.'); return; }
   if (pass !== pass2) { showAuthError('As senhas não coincidem.'); return; }
-  const { error } = await supa.auth.signUp({ email, password: pass });
+  const { data, error } = await supa.auth.signUp({ email, password: pass });
   if (error) { showAuthError(translateError(error.message)); return; }
-  showAuthError('✅ Conta criada! Verifique seu e-mail para confirmar.');
-  document.getElementById('auth-error').style.color = 'var(--green)';
+  if (data.session) { await handleSession(data.session); } else {
+    showAuthError('✅ Conta criada! Faça login para entrar.');
+    document.getElementById('auth-error').style.color = 'var(--green)';
+  }
 }
 
 function translateError(msg) {
@@ -647,6 +649,7 @@ function renderDocs(c) {
 }
 
 function setTab(tab) {
+  if (state.activeTab === 'transcricoes' && tab !== 'transcricoes') saveTranscriptions();
   state.activeTab = tab;
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab===tab));
   document.querySelectorAll('.tab-panel').forEach(p => p.classList.toggle('active', p.id===`tab-${tab}`));
@@ -767,19 +770,6 @@ function copyDoc(which) {
   const text = which==='produto'?c.doc_produto:c.doc_ementa;
   if (!text){toast('Nenhum conteúdo.','error');return;}
   navigator.clipboard.writeText(text).then(()=>toast('Copiado!','success'));
-}
-
-// ─── API KEY ─────────────────────────────────────────────
-function openApiModal() {
-  document.getElementById('api-key-input').value=state.apiKey;
-  document.getElementById('modal-api').classList.remove('hidden');
-}
-function saveApiKey() {
-  const key=document.getElementById('api-key-input').value.trim();
-  state.apiKey=key; localStorage.setItem('gemini_api_key',key);
-  closeModal('modal-api');
-  document.getElementById('api-banner')?.classList.toggle('hidden',!!key);
-  toast('Chave salva!','success');
 }
 
 // ─── MODALS ──────────────────────────────────────────────
