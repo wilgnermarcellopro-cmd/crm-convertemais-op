@@ -743,15 +743,11 @@ TRANSCRIÇÃO:
 ${vendas}`;
 
   try {
-    const resp = await fetch(
-      'https://tergtgfxvjtvlbvbzhss.supabase.co/functions/v1/generate-documents',
-      { method:'POST', headers:{'Content-Type':'application/json','Authorization':`Bearer ${SUPABASE_KEY}`},
-        body: JSON.stringify({ systemPrompt: SYSTEM_PROMPT, userMsg })
-      }
-    );
-    if (!resp.ok) { const e=await resp.json().catch(()=>({})); throw new Error(e.error||`HTTP ${resp.status}`); }
-    const data = await resp.json();
-    const raw  = data.text||'';
+    const { data, error: fnError } = await supa.functions.invoke('generate-documents', {
+      body: { systemPrompt: SYSTEM_PROMPT, userMsg }
+    });
+    if (fnError) throw new Error(fnError.message);
+    const raw = data?.text || '';
     const split = raw.split('---DOCUMENTO2---');
     c.doc_produto = split[0]?.trim()||raw.trim();
     c.doc_ementa  = split[1]?.trim()||'';
