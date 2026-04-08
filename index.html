@@ -231,7 +231,6 @@ select.fc { cursor:pointer; }
         <div class="user-dot"></div>
         <span id="user-email-display"></span>
       </div>
-      <button class="btn btn-ghost btn-sm" onclick="openApiModal()">⚙ API Gemini</button>
       <button class="btn btn-ghost btn-sm" onclick="doLogout()" style="color:var(--text-muted)">Sair</button>
     </div>
   </header>
@@ -317,9 +316,6 @@ select.fc { cursor:pointer; }
         </div>
 
         <div class="tab-panel" id="tab-transcricoes">
-          <div id="api-banner" class="api-banner">
-            ⚠ Configure sua <a onclick="openApiModal()">Chave da API Gemini</a> antes de gerar documentos.
-          </div>
           <div class="t-section">
             <div class="t-header">
               <span class="t-title">Ideia do Produto / Nome Sugerido</span>
@@ -399,29 +395,6 @@ select.fc { cursor:pointer; }
   </div>
 </div>
 
-<!-- MODAL: API KEY -->
-<div class="modal-overlay hidden" id="modal-api">
-  <div class="modal">
-    <div class="modal-head">
-      <span class="modal-title">Chave da API Gemini</span>
-      <button class="btn btn-ghost btn-sm" onclick="closeModal('modal-api')">✕</button>
-    </div>
-    <div class="modal-body">
-      <div class="fg" style="margin-bottom:12px">
-        <label>API Key</label>
-        <input class="fc" id="api-key-input" type="password" placeholder="AIza...">
-      </div>
-      <p style="font-size:12px;color:var(--text-muted);line-height:1.6">
-        Salva apenas localmente neste navegador.<br>
-        Obtenha em: <strong style="color:var(--text-secondary)">aistudio.google.com → Get API Key</strong>
-      </p>
-    </div>
-    <div class="modal-foot">
-      <button class="btn btn-outline" onclick="closeModal('modal-api')">Cancelar</button>
-      <button class="btn btn-primary" onclick="saveApiKey()">Salvar</button>
-    </div>
-  </div>
-</div>
 
 <div id="toast"></div>
 
@@ -513,7 +486,7 @@ let state = {
   selectedId: null,
   activeTab: 'dados',
   generating: false,
-  apiKey: localStorage.getItem('gemini_api_key') || '',
+  apiKey: '',
   userId: null
 };
 
@@ -769,19 +742,16 @@ TRANSCRIÇÃO:
 ${vendas}`;
 
   try {
+    const session = (await supa.auth.getSession()).data.session;
     const resp = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${state.apiKey}`,
-      { method:'POST', headers:{'Content-Type':'application/json'},
-        body: JSON.stringify({
-          system_instruction:{parts:[{text:SYSTEM_PROMPT}]},
-          contents:[{role:'user',parts:[{text:userMsg}]}],
-          generationConfig:{temperature:0.7,maxOutputTokens:8192}
-        })
+      'https://tergtgfxvjtvlbvbzhss.supabase.co/functions/v1/generate-documents',
+      { method:'POST', headers:{'Content-Type':'application/json','Authorization':`Bearer ${session.access_token}`},
+        body: JSON.stringify({ systemPrompt: SYSTEM_PROMPT, userMsg })
       }
     );
-    if (!resp.ok) { const e=await resp.json().catch(()=>({})); throw new Error(e.error?.message||`HTTP ${resp.status}`); }
-    const data  = await resp.json();
-    const raw   = data.candidates?.[0]?.content?.parts?.[0]?.text||'';
+    if (!resp.ok) { const e=await resp.json().catch(()=>({})); throw new Error(e.error||`HTTP ${resp.status}`); }
+    const data = await resp.json();
+    const raw  = data.text||'';
     const split = raw.split('---DOCUMENTO2---');
     c.doc_produto = split[0]?.trim()||raw.trim();
     c.doc_ementa  = split[1]?.trim()||'';
@@ -839,7 +809,7 @@ supa.auth.onAuthStateChange(async (event, session) => {
   if (session?.user) {
     state.userId = session.user.id;
     document.getElementById('user-email-display').textContent = session.user.email;
-    state.apiKey = localStorage.getItem('gemini_api_key') || '';
+    state.apiKey = '';
     await loadClients();
     showScreen('app');
     renderSidebar();
