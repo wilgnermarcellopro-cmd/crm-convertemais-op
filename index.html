@@ -812,7 +812,7 @@ function toast(msg,type=''){
 function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 
 // ─── INIT ────────────────────────────────────────────────
-supa.auth.onAuthStateChange(async (event, session) => {
+async function handleSession(session) {
   if (session?.user) {
     state.userId = session.user.id;
     document.getElementById('user-email-display').textContent = session.user.email;
@@ -825,11 +825,14 @@ supa.auth.onAuthStateChange(async (event, session) => {
     const btn = document.getElementById('btn-login');
     if (btn) { btn.disabled = false; btn.textContent = 'Entrar'; }
   }
+}
+
+supa.auth.onAuthStateChange((event, session) => {
+  if (event === 'SIGNED_IN' || event === 'INITIAL_SESSION') handleSession(session);
+  if (event === 'SIGNED_OUT') handleSession(null);
 });
 
-supa.auth.getSession().then(({ data: { session } }) => {
-  if (!session) showScreen('login');
-});
+supa.auth.getSession().then(({ data: { session } }) => handleSession(session));
 </script>
 </body>
 </html>
