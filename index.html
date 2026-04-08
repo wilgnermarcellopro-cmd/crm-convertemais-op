@@ -743,10 +743,9 @@ TRANSCRIÇÃO:
 ${vendas}`;
 
   try {
-    const session = (await supa.auth.getSession()).data.session;
     const resp = await fetch(
       'https://tergtgfxvjtvlbvbzhss.supabase.co/functions/v1/generate-documents',
-      { method:'POST', headers:{'Content-Type':'application/json','Authorization':`Bearer ${session.access_token}`},
+      { method:'POST', headers:{'Content-Type':'application/json','Authorization':`Bearer ${SUPABASE_KEY}`},
         body: JSON.stringify({ systemPrompt: SYSTEM_PROMPT, userMsg })
       }
     );
