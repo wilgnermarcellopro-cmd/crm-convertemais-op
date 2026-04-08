@@ -400,6 +400,14 @@ textarea.t-area { min-height:200px; font-size:13px; line-height:1.65; }
 
           <div class="t-section">
             <div class="t-header">
+              <span class="t-title">Ideia do Produto / Nome Sugerido</span>
+              <span class="t-badge" style="background:var(--violet-dim);color:var(--violet)">Contexto</span>
+            </div>
+            <input class="fc" id="t-ideia" type="text" placeholder="Ex: Método de posicionamento visual para profissionais liberais — R$ 27">
+          </div>
+
+          <div class="t-section">
+            <div class="t-header">
               <span class="t-title">Reunião de Vendas</span>
               <span class="t-badge">Obrigatório</span>
             </div>
@@ -521,79 +529,77 @@ textarea.t-area { min-height:200px; font-size:13px; line-height:1.65; }
 // ─────────────────────────────────────────
 const SYSTEM_PROMPT = `Você é um copywriter extraordinário com os conhecimentos de Mark Ford, Jon Benson, Gary Halbert, Bencivenga, Russel Brunson, Frank Kern e Beto Altenhofen.
 
-Você é especialista em criar ofertas absurdamente sedutoras de tickets de 7, 17, 27, 47, 57, 67, 77, 87 e 97 reais.
+Você é especialista em criar Micro-Ofertas de tickets de 7, 17, 27, 47, 57, 67, 77, 87 e 97 reais — produtos de baixo custo que mitiga os riscos do cliente e gera desejo de compra com base em uma promessa primária + mecanismo único.
 
-Você entende que uma Micro-Oferta é um produto de baixo custo que mitiga os riscos do cliente e gera desejo de compra.
+Com base nas informações e transcrições que você receber, crie EXATAMENTE DOIS documentos separados pelo marcador ---DOCUMENTO2--- (exatamente assim, sem espaços).
 
-As Micro-Ofertas funcionam com base em uma promessa primária seguida do mecanismo de funcionamento, dividido em:
-- Mecanismo do problema: o "ciclo de erros" que impede a pessoa de atingir o objetivo.
-- Mecanismo da solução: o que falta para que o público chegue no objetivo.
+════════════════════════════════════════
+DOCUMENTO 1: ESTRUTURA DA MICRO-OFERTA
+════════════════════════════════════════
 
-Com base nas transcrições que você receber, crie EXATAMENTE DOIS documentos separados pelo marcador ---DOCUMENTO2--- (exatamente assim, sem espaços).
+1. Identificação Técnica
+Produto: [nome completo do produto]
+Ticket Sugerido: R$ [valor] ([justificativa breve baseada no mercado e público])
+Nível de Consciência: [nível — ex: Consciente do Problema] — [descrição do estado mental do público]
+Nível de Sofisticação: Nível [X] — [o que já existe no mercado e como se diferenciar]
 
-═══════════════════════════════
-DOCUMENTO 1: DOCUMENTO DO PRODUTO
-═══════════════════════════════
-Estrutura obrigatória:
+2. A Big Idea & Promessa
+Promessa Primária: [resultado específico, prazo e método — ex: "Destrave X em Y dias fazendo Z"]
+Big Idea: [nome do conceito único] — [explicação do mecanismo mental/psicológico que justifica a promessa]
 
-NOME DO PRODUTO:
-TICKET / PREÇO:
-PROMESSA PRIMÁRIA:
-MECANISMO DO PROBLEMA:
-MECANISMO DA SOLUÇÃO:
-DORES DO PÚBLICO-ALVO:
--
--
--
-NÍVEL DE CONSCIÊNCIA DO PÚBLICO:
-NÍVEL DE SOFISTICAÇÃO DO MERCADO:
-GARANTIAS SUGERIDAS:
-FAQ:
-Q1:
-R1:
-Q2:
-R2:
-Q3:
-R3:
-Q4:
-R4:
-Q5:
-R5:
-OBSERVAÇÕES GERAIS:
+3. O Mecanismo Único (A Lógica da Venda)
+Mecanismo do Problema ([nome do ciclo de erro]): [por que a pessoa ainda não atingiu o objetivo — o erro que comete]
+Mecanismo da Solução ([nome do método]): [o que muda com o produto — a virada que ele entrega]
+
+4. Dores e Desejos (O Mapa da Empatia)
+Dores:
+- [dor 1]
+- [dor 2]
+- [dor 3]
+- [dor 4]
+Desejos:
+- [desejo 1]
+- [desejo 2]
+- [desejo 3]
+
+5. Elementos de Conversão
+Garantia: [tipo de garantia] — "[texto exato da garantia como aparecerá na página de vendas]"
+FAQ (Quebra de Objeções):
+"[Objeção 1]?" [Resposta direta e persuasiva]
+"[Objeção 2]?" [Resposta direta e persuasiva]
+"[Objeção 3]?" [Resposta direta e persuasiva]
 
 ---DOCUMENTO2---
 
-═══════════════════════════════
+════════════════════════════════════════
 DOCUMENTO 2: EMENTA DE GRAVAÇÃO
-═══════════════════════════════
+════════════════════════════════════════
 
 Comece por aqui
 
 Aula: Boas-vindas
+Resumo: [boas-vindas ao produto, como aproveitar o conteúdo e o que o aluno vai conquistar]
+
 Aula: Termos de uso
+Resumo: Regras da plataforma, direitos de uso do conteúdo e como funciona o suporte ao aluno.
+
 Aula: Pesquisa de conteúdo
+Resumo: Formulário breve para entender o contexto, nicho e principais dificuldades do aluno.
 
-(A partir daqui, cada aula é o seu próprio módulo individual na plataforma)
+(Módulos Individuais — crie quantas aulas forem necessárias para cobrir o conteúdo do produto. Mínimo 5, máximo 12. A última aula deve SEMPRE ser o upsell.)
 
-Aula 1 - [Título da Aula] - [Tema da Aula]
-Resumo: Descrição curta do que será abordado.
+Aula 1 - [Título] - [Tema]
+Resumo: [descrição curta do que será abordado nesta aula]
 
-Aula 2 - [Título da Aula] - [Tema da Aula]
-Resumo: Descrição curta do que será abordado.
+Aula 2 - [Título] - [Tema]
+Resumo: [descrição curta do que será abordado nesta aula]
 
-Aula 3 - [Título da Aula] - [Tema da Aula]
-Resumo: Descrição curta do que será abordado.
+[continue com quantas aulas forem necessárias para o produto]
 
-Aula 4 - [Título da Aula] - [Tema da Aula]
-Resumo: Descrição curta do que será abordado.
+Aula [N] - A grande transformação: Próximo Passo/Upsell
+Resumo: Como unificar todo o aprendizado em um plano de ação. Convite para a mentoria/programa de alto ticket para quem deseja acompanhamento personalizado.
 
-Aula 5 - [Título da Aula] - [Tema da Aula]
-Resumo: Descrição curta do que será abordado.
-
-Aula 6 - [Título da Aula] - [Tema da Aula: Próximo Passo/Upsell]
-Resumo: Pitch para a mentoria de alto ticket.
-
-REGRA: Separe os dois documentos EXATAMENTE com ---DOCUMENTO2--- para divisão correta.`;
+REGRA CRÍTICA: Separe os dois documentos EXATAMENTE com ---DOCUMENTO2--- para que o sistema divida corretamente.`;
 
 // ─────────────────────────────────────────
 // STATE
@@ -683,6 +689,7 @@ function renderClientView() {
   document.getElementById('f-niche').value   = c.niche   || '';
   document.getElementById('f-notes').value   = c.notes   || '';
 
+  document.getElementById('t-ideia').value   = c.t_ideia   || '';
   document.getElementById('t-vendas').value  = c.t_vendas  || '';
   document.getElementById('t-onboard').value = c.t_onboard || '';
 
@@ -805,6 +812,7 @@ function deleteClient() {
 function saveTranscriptions() {
   const c = getSelected();
   if (!c) return;
+  c.t_ideia   = document.getElementById('t-ideia').value;
   c.t_vendas  = document.getElementById('t-vendas').value;
   c.t_onboard = document.getElementById('t-onboard').value;
   persist();
@@ -840,15 +848,16 @@ async function generateDocuments() {
   document.getElementById('gen-loading').style.display = 'flex';
 
   const onboard = document.getElementById('t-onboard').value.trim();
-  const userMsg = `CLIENTE: ${c.name}
-PRODUTO: ${c.product || 'A definir'}
+  const ideia   = document.getElementById('t-ideia').value.trim();
+  const userMsg = `ESPECIALISTA / CLIENTE: ${c.name}
+NICHO / MERCADO: ${c.niche || 'A definir'}
 TICKET SUGERIDO: ${c.ticket || 'A definir'}
-NICHO: ${c.niche || 'A definir'}
+${ideia ? `IDEIA DO PRODUTO / NOME SUGERIDO: ${ideia}` : 'IDEIA DO PRODUTO: Extrair da transcrição'}
 
 TRANSCRIÇÃO — REUNIÃO DE VENDAS:
 ${vendas}
 
-${onboard ? `TRANSCRIÇÃO — REUNIÃO DE ONBOARDING:\n${onboard}` : '(Sem transcrição de onboarding por enquanto)'}`;
+${onboard ? `TRANSCRIÇÃO — REUNIÃO DE ONBOARDING:\n${onboard}` : '(Reunião de onboarding ainda não realizada)'}`;
 
   try {
     const resp = await fetch(
