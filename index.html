@@ -722,7 +722,6 @@ async function generateDocuments() {
   if (state.generating) return;
   const c = getSelected(); if (!c) return;
   await saveTranscriptions();
-  if (!state.apiKey) { openApiModal(); toast('Configure a Chave API Gemini primeiro.','error'); return; }
   const vendas = document.getElementById('t-vendas').value.trim();
   if (!vendas) { toast('A transcrição é obrigatória.','error'); return; }
 
