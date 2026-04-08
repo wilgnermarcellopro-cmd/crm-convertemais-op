@@ -10,13 +10,10 @@
   --bg-sidebar:   #111827;
   --bg-card:      #1e2433;
   --bg-input:     #131720;
-  --bg-elevated:  #161d2e;
   --accent:       #6366f1;
   --accent-hover: #5254cc;
   --accent-dim:   rgba(99,102,241,.15);
-  --accent-glow:  rgba(99,102,241,.35);
   --green:        #22c55e;
-  --green-dim:    rgba(34,197,94,.15);
   --red:          #ef4444;
   --red-dim:      rgba(239,68,68,.15);
   --amber:        #f59e0b;
@@ -35,80 +32,54 @@
   --header-h:     60px;
   --transition:   .18s cubic-bezier(.4,0,.2,1);
 }
-
 *,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
 html,body { height:100%; overflow:hidden; }
-body {
-  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
-  background:var(--bg-base); color:var(--text-primary); line-height:1.5;
-}
+body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; background:var(--bg-base); color:var(--text-primary); line-height:1.5; }
 button { cursor:pointer; border:none; background:none; font-family:inherit; color:inherit; }
 input,textarea,select { font-family:inherit; color:inherit; }
 ::-webkit-scrollbar { width:5px; }
 ::-webkit-scrollbar-track { background:transparent; }
 ::-webkit-scrollbar-thumb { background:var(--border); border-radius:10px; }
-::-webkit-scrollbar-thumb:hover { background:var(--border-hover); }
+
+/* SCREENS */
+.screen { position:fixed; inset:0; display:flex; align-items:center; justify-content:center; background:var(--bg-base); z-index:1000; }
+.hidden { display:none !important; }
+.auth-card { width:420px; max-width:95vw; background:var(--bg-sidebar); border:1px solid var(--border); border-radius:var(--radius-lg); padding:36px; box-shadow:var(--shadow-lg); }
+.auth-logo { display:flex; align-items:center; justify-content:center; gap:10px; font-weight:700; font-size:17px; margin-bottom:28px; }
+.auth-tabs { display:flex; background:var(--bg-input); border:1px solid var(--border); border-radius:var(--radius-sm); padding:3px; gap:3px; margin-bottom:24px; }
+.auth-tab { flex:1; padding:8px; border-radius:6px; font-size:13px; font-weight:500; color:var(--text-muted); transition:all var(--transition); }
+.auth-tab.active { background:var(--accent); color:#fff; }
+.auth-error { padding:10px 12px; background:var(--red-dim); border:1px solid var(--red); border-radius:var(--radius-sm); font-size:12px; color:var(--red); margin-top:12px; }
+.user-badge { display:flex; align-items:center; gap:6px; font-size:12px; color:var(--text-muted); }
+.user-dot { width:6px; height:6px; border-radius:50%; background:var(--green); flex-shrink:0; }
 
 /* LAYOUT */
 #app { display:flex; flex-direction:column; height:100vh; }
-
-#header {
-  display:flex; align-items:center; justify-content:space-between;
-  padding:0 20px; height:var(--header-h);
-  background:var(--bg-sidebar); border-bottom:1px solid var(--border);
-  flex-shrink:0; z-index:10;
-}
+#header { display:flex; align-items:center; justify-content:space-between; padding:0 20px; height:var(--header-h); background:var(--bg-sidebar); border-bottom:1px solid var(--border); flex-shrink:0; z-index:10; }
 .logo { display:flex; align-items:center; gap:10px; font-weight:700; font-size:16px; }
 .logo-dot { width:8px; height:8px; border-radius:50%; background:var(--accent); }
-
 #main { display:flex; flex:1; overflow:hidden; }
 
 /* SIDEBAR */
-#sidebar {
-  width:var(--sidebar-w); flex-shrink:0;
-  background:var(--bg-sidebar); border-right:1px solid var(--border);
-  display:flex; flex-direction:column; overflow:hidden;
-}
-.sidebar-head {
-  padding:16px; border-bottom:1px solid var(--border); flex-shrink:0;
-}
-.sidebar-label {
-  font-size:11px; font-weight:600; text-transform:uppercase;
-  letter-spacing:.08em; color:var(--text-muted); margin-bottom:2px;
-}
+#sidebar { width:var(--sidebar-w); flex-shrink:0; background:var(--bg-sidebar); border-right:1px solid var(--border); display:flex; flex-direction:column; overflow:hidden; }
+.sidebar-head { padding:16px; border-bottom:1px solid var(--border); flex-shrink:0; }
+.sidebar-label { font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:.08em; color:var(--text-muted); }
 #client-list { flex:1; overflow-y:auto; padding:8px; }
 .sidebar-foot { padding:12px 16px; border-top:1px solid var(--border); flex-shrink:0; }
-
-.client-item {
-  display:flex; align-items:center; gap:10px;
-  padding:10px 12px; border-radius:var(--radius-sm);
-  cursor:pointer; transition:background var(--transition);
-  border:1px solid transparent; margin-bottom:2px;
-}
+.client-item { display:flex; align-items:center; gap:10px; padding:10px 12px; border-radius:var(--radius-sm); cursor:pointer; transition:background var(--transition); border:1px solid transparent; margin-bottom:2px; }
 .client-item:hover { background:var(--bg-card); }
 .client-item.active { background:var(--accent-dim); border-color:var(--accent); }
-.ci-avatar {
-  width:34px; height:34px; border-radius:var(--radius-sm);
-  background:var(--accent-dim); display:flex; align-items:center;
-  justify-content:center; font-size:14px; font-weight:700;
-  color:var(--accent); flex-shrink:0;
-}
+.ci-avatar { width:34px; height:34px; border-radius:var(--radius-sm); background:var(--accent-dim); display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700; color:var(--accent); flex-shrink:0; }
 .ci-info { flex:1; min-width:0; }
 .ci-name { font-size:13px; font-weight:500; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 .ci-sub { font-size:11px; color:var(--text-muted); margin-top:1px; display:flex; align-items:center; gap:4px; }
-.dot {
-  display:inline-block; width:6px; height:6px; border-radius:50%; flex-shrink:0;
-}
+.dot { display:inline-block; width:6px; height:6px; border-radius:50%; flex-shrink:0; }
 .dot-onboarding { background:var(--accent); }
-.dot-producao { background:var(--amber); }
-.dot-entregue { background:var(--green); }
+.dot-producao   { background:var(--amber); }
+.dot-entregue   { background:var(--green); }
 
 /* BUTTONS */
-.btn {
-  display:inline-flex; align-items:center; justify-content:center; gap:6px;
-  padding:8px 14px; border-radius:var(--radius-sm);
-  font-size:13px; font-weight:500; transition:all var(--transition);
-}
+.btn { display:inline-flex; align-items:center; justify-content:center; gap:6px; padding:8px 14px; border-radius:var(--radius-sm); font-size:13px; font-weight:500; transition:all var(--transition); }
 .btn-primary { background:var(--accent); color:#fff; }
 .btn-primary:hover { background:var(--accent-hover); }
 .btn-ghost { color:var(--text-secondary); }
@@ -123,40 +94,22 @@ input,textarea,select { font-family:inherit; color:inherit; }
 
 /* CONTENT */
 #content { flex:1; display:flex; flex-direction:column; overflow:hidden; }
-
-/* EMPTY STATE */
-#empty-state {
-  flex:1; display:flex; flex-direction:column;
-  align-items:center; justify-content:center; gap:8px; color:var(--text-muted);
-}
+#empty-state { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; color:var(--text-muted); }
 .es-icon { font-size:40px; margin-bottom:4px; }
 .es-title { font-size:15px; font-weight:600; color:var(--text-secondary); }
 .es-desc { font-size:13px; text-align:center; max-width:260px; }
-
-/* CLIENT VIEW */
 #client-view { flex:1; display:flex; flex-direction:column; overflow:hidden; }
-
 .cv-head { padding:20px 24px 0; flex-shrink:0; }
 .cv-top { display:flex; align-items:center; gap:12px; margin-bottom:16px; }
-.cv-avatar {
-  width:44px; height:44px; border-radius:var(--radius-md);
-  background:var(--accent-dim); display:flex; align-items:center;
-  justify-content:center; font-size:18px; font-weight:700; color:var(--accent);
-}
+.cv-avatar { width:44px; height:44px; border-radius:var(--radius-md); background:var(--accent-dim); display:flex; align-items:center; justify-content:center; font-size:18px; font-weight:700; color:var(--accent); }
 .cv-name { font-size:19px; font-weight:700; }
 .cv-meta { font-size:12px; color:var(--text-muted); margin-top:2px; }
 
 /* TABS */
 .tabs { display:flex; border-bottom:1px solid var(--border); }
-.tab-btn {
-  padding:10px 16px; font-size:13px; font-weight:500;
-  color:var(--text-muted); border-bottom:2px solid transparent;
-  transition:all var(--transition); margin-bottom:-1px;
-}
+.tab-btn { padding:10px 16px; font-size:13px; font-weight:500; color:var(--text-muted); border-bottom:2px solid transparent; transition:all var(--transition); margin-bottom:-1px; }
 .tab-btn:hover { color:var(--text-secondary); }
 .tab-btn.active { color:var(--text-primary); border-bottom-color:var(--accent); }
-
-/* TAB PANELS */
 .tab-panel { flex:1; overflow-y:auto; padding:24px; display:none; }
 .tab-panel.active { display:block; }
 
@@ -165,132 +118,107 @@ input,textarea,select { font-family:inherit; color:inherit; }
 .fg { display:flex; flex-direction:column; gap:6px; }
 .fg.span2 { grid-column:1/-1; }
 label { font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:.05em; color:var(--text-secondary); }
-.fc {
-  background:var(--bg-input); border:1px solid var(--border);
-  border-radius:var(--radius-sm); padding:9px 12px;
-  font-size:13px; color:var(--text-primary);
-  transition:border-color var(--transition); outline:none; width:100%;
-}
+.fc { background:var(--bg-input); border:1px solid var(--border); border-radius:var(--radius-sm); padding:9px 12px; font-size:13px; color:var(--text-primary); transition:border-color var(--transition); outline:none; width:100%; }
 .fc:focus { border-color:var(--accent); }
 .fc::placeholder { color:var(--text-muted); }
 textarea.fc { resize:vertical; }
 select.fc { cursor:pointer; }
 
-/* TRANSCRIPTION TAB */
+/* TRANSCRIPTION */
 .t-section { margin-bottom:24px; }
-.t-header {
-  display:flex; align-items:center; justify-content:space-between; margin-bottom:8px;
-}
+.t-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:8px; }
 .t-title { font-size:14px; font-weight:600; }
-.t-badge {
-  font-size:11px; padding:2px 8px; border-radius:20px;
-  background:var(--accent-dim); color:var(--accent);
-}
-textarea.t-area { min-height:200px; font-size:13px; line-height:1.65; }
-
-.gen-bar {
-  background:var(--bg-card); border:1px solid var(--border);
-  border-radius:var(--radius-md); padding:16px;
-  display:flex; align-items:center; justify-content:space-between;
-  gap:16px; margin-top:8px;
-}
+.t-badge { font-size:11px; padding:2px 8px; border-radius:20px; background:var(--accent-dim); color:var(--accent); }
+.gen-bar { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius-md); padding:16px; display:flex; align-items:center; justify-content:space-between; gap:16px; margin-top:8px; }
 .gen-bar-text { font-size:13px; color:var(--text-secondary); }
 .gen-bar-text strong { color:var(--text-primary); }
 
-/* DOCUMENTS TAB */
-.docs-grid {
-  display:grid; grid-template-columns:1fr 1fr; gap:16px;
-}
-.doc-card {
-  background:var(--bg-card); border:1px solid var(--border);
-  border-radius:var(--radius-md); display:flex; flex-direction:column;
-}
-.doc-card-head {
-  padding:12px 16px; border-bottom:1px solid var(--border);
-  display:flex; align-items:center; justify-content:space-between; flex-shrink:0;
-}
+/* DOCUMENTS */
+.docs-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+.doc-card { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius-md); display:flex; flex-direction:column; }
+.doc-card-head { padding:12px 16px; border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; flex-shrink:0; }
 .doc-card-title { font-size:13px; font-weight:600; }
-.doc-card-body {
-  padding:16px; font-size:13px; line-height:1.7;
-  color:var(--text-secondary); white-space:pre-wrap; word-break:break-word;
-  max-height:520px; overflow-y:auto;
-}
-.doc-card-body.empty {
-  display:flex; align-items:center; justify-content:center;
-  min-height:180px; color:var(--text-muted); font-style:italic;
-  text-align:center;
-}
+.doc-card-body { padding:16px; font-size:13px; line-height:1.7; color:var(--text-secondary); white-space:pre-wrap; word-break:break-word; max-height:520px; overflow-y:auto; }
+.doc-card-body.empty { display:flex; align-items:center; justify-content:center; min-height:180px; color:var(--text-muted); font-style:italic; text-align:center; }
 
 /* LOADING */
-.gen-loading {
-  display:none; align-items:center; gap:12px; margin-bottom:16px;
-  padding:12px 16px; background:var(--bg-card);
-  border-radius:var(--radius-sm); border:1px solid var(--border);
-}
-.spinner {
-  width:18px; height:18px; border:2px solid var(--border);
-  border-top-color:var(--accent); border-radius:50%;
-  animation:spin .7s linear infinite; flex-shrink:0;
-}
+.gen-loading { display:none; align-items:center; gap:12px; margin-bottom:16px; padding:12px 16px; background:var(--bg-card); border-radius:var(--radius-sm); border:1px solid var(--border); }
+.spinner { width:18px; height:18px; border:2px solid var(--border); border-top-color:var(--accent); border-radius:50%; animation:spin .7s linear infinite; flex-shrink:0; }
 @keyframes spin { to { transform:rotate(360deg); } }
 
 /* API BANNER */
-.api-banner {
-  background:var(--violet-dim); border:1px solid rgba(139,92,246,.3);
-  border-radius:var(--radius-sm); padding:10px 14px;
-  display:flex; align-items:center; gap:8px;
-  font-size:12px; color:var(--text-secondary); margin-bottom:16px;
-}
+.api-banner { background:var(--violet-dim); border:1px solid rgba(139,92,246,.3); border-radius:var(--radius-sm); padding:10px 14px; display:flex; align-items:center; gap:8px; font-size:12px; color:var(--text-secondary); margin-bottom:16px; }
 .api-banner.hidden { display:none; }
 .api-banner a { color:var(--violet); cursor:pointer; text-decoration:none; }
-.api-banner a:hover { text-decoration:underline; }
 
 /* MODAL */
-.modal-overlay {
-  position:fixed; inset:0; background:rgba(0,0,0,.7);
-  display:flex; align-items:center; justify-content:center;
-  z-index:100; backdrop-filter:blur(4px);
-}
+.modal-overlay { position:fixed; inset:0; background:rgba(0,0,0,.7); display:flex; align-items:center; justify-content:center; z-index:100; backdrop-filter:blur(4px); }
 .modal-overlay.hidden { display:none; }
-.modal {
-  background:var(--bg-sidebar); border:1px solid var(--border);
-  border-radius:var(--radius-lg); width:460px; max-width:95vw;
-  box-shadow:var(--shadow-lg);
-}
-.modal-head {
-  padding:20px 20px 0;
-  display:flex; align-items:center; justify-content:space-between;
-}
+.modal { background:var(--bg-sidebar); border:1px solid var(--border); border-radius:var(--radius-lg); width:460px; max-width:95vw; box-shadow:var(--shadow-lg); }
+.modal-head { padding:20px 20px 0; display:flex; align-items:center; justify-content:space-between; }
 .modal-title { font-size:16px; font-weight:700; }
 .modal-body { padding:20px; }
-.modal-foot {
-  padding:0 20px 20px; display:flex; justify-content:flex-end; gap:8px;
-}
+.modal-foot { padding:0 20px 20px; display:flex; justify-content:flex-end; gap:8px; }
 
 /* TOAST */
-#toast {
-  position:fixed; bottom:24px; right:24px;
-  background:var(--bg-card); border:1px solid var(--border);
-  border-radius:var(--radius-md); padding:11px 16px;
-  font-size:13px; color:var(--text-primary);
-  box-shadow:var(--shadow-lg); z-index:200;
-  transform:translateY(60px); opacity:0;
-  transition:all .2s ease;
-}
+#toast { position:fixed; bottom:24px; right:24px; background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius-md); padding:11px 16px; font-size:13px; color:var(--text-primary); box-shadow:var(--shadow-lg); z-index:200; transform:translateY(60px); opacity:0; transition:all .2s ease; }
 #toast.show { transform:translateY(0); opacity:1; }
 #toast.success { border-color:var(--green); }
-#toast.error { border-color:var(--red); }
+#toast.error   { border-color:var(--red); }
 
-/* TAG */
-.tag {
-  display:inline-flex; align-items:center;
-  font-size:11px; padding:3px 8px; border-radius:20px; font-weight:500;
-}
+.tag { display:inline-flex; align-items:center; font-size:11px; padding:3px 8px; border-radius:20px; font-weight:500; }
 .tag-accent { background:var(--accent-dim); color:var(--accent); }
 </style>
 </head>
 <body>
-<div id="app">
+
+<!-- SCREEN: LOGIN -->
+<div id="screen-login" class="screen">
+  <div class="auth-card">
+    <div class="auth-logo">
+      <div class="logo-dot"></div>
+      Converte CRM
+      <span class="tag tag-accent">Operacional</span>
+    </div>
+    <div class="auth-tabs">
+      <button class="auth-tab active" id="tab-login-btn" onclick="setAuthTab('login')">Entrar</button>
+      <button class="auth-tab" id="tab-reg-btn" onclick="setAuthTab('register')">Criar conta</button>
+    </div>
+
+    <div id="form-login">
+      <div class="fg" style="margin-bottom:14px">
+        <label>E-mail</label>
+        <input class="fc" id="login-email" type="email" placeholder="seu@email.com" onkeydown="if(event.key==='Enter')doLogin()">
+      </div>
+      <div class="fg" style="margin-bottom:20px">
+        <label>Senha</label>
+        <input class="fc" id="login-password" type="password" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()">
+      </div>
+      <button class="btn btn-primary btn-full" id="btn-login" onclick="doLogin()">Entrar</button>
+    </div>
+
+    <div id="form-register" style="display:none">
+      <div class="fg" style="margin-bottom:14px">
+        <label>E-mail</label>
+        <input class="fc" id="reg-email" type="email" placeholder="seu@email.com">
+      </div>
+      <div class="fg" style="margin-bottom:14px">
+        <label>Senha</label>
+        <input class="fc" id="reg-password" type="password" placeholder="Mínimo 6 caracteres">
+      </div>
+      <div class="fg" style="margin-bottom:20px">
+        <label>Confirmar senha</label>
+        <input class="fc" id="reg-password2" type="password" placeholder="Repita a senha">
+      </div>
+      <button class="btn btn-primary btn-full" onclick="doRegister()">Criar conta</button>
+    </div>
+
+    <div id="auth-error" class="auth-error" style="display:none"></div>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app" style="display:none">
 
   <header id="header">
     <div class="logo">
@@ -298,15 +226,19 @@ textarea.t-area { min-height:200px; font-size:13px; line-height:1.65; }
       Converte CRM
       <span class="tag tag-accent" style="margin-left:4px">Operacional</span>
     </div>
-    <button class="btn btn-ghost btn-sm" onclick="openApiModal()">⚙ Chave API Gemini</button>
+    <div style="display:flex;align-items:center;gap:12px">
+      <div class="user-badge">
+        <div class="user-dot"></div>
+        <span id="user-email-display"></span>
+      </div>
+      <button class="btn btn-ghost btn-sm" onclick="openApiModal()">⚙ API Gemini</button>
+      <button class="btn btn-ghost btn-sm" onclick="doLogout()" style="color:var(--text-muted)">Sair</button>
+    </div>
   </header>
 
   <div id="main">
-
     <aside id="sidebar">
-      <div class="sidebar-head">
-        <div class="sidebar-label">Clientes</div>
-      </div>
+      <div class="sidebar-head"><div class="sidebar-label">Clientes</div></div>
       <div id="client-list"></div>
       <div class="sidebar-foot">
         <button class="btn btn-primary btn-full" onclick="openNewClientModal()">+ Novo Cliente</button>
@@ -314,7 +246,6 @@ textarea.t-area { min-height:200px; font-size:13px; line-height:1.65; }
     </aside>
 
     <main id="content">
-
       <div id="empty-state">
         <div class="es-icon">🗂</div>
         <div class="es-title">Nenhum cliente selecionado</div>
@@ -339,7 +270,6 @@ textarea.t-area { min-height:200px; font-size:13px; line-height:1.65; }
           </div>
         </div>
 
-        <!-- TAB: DADOS -->
         <div class="tab-panel active" id="tab-dados">
           <div class="form-grid">
             <div class="fg">
@@ -358,15 +288,9 @@ textarea.t-area { min-height:200px; font-size:13px; line-height:1.65; }
               <label>Ticket do Produto</label>
               <select class="fc" id="f-ticket">
                 <option value="">Selecione...</option>
-                <option>R$ 7</option>
-                <option>R$ 17</option>
-                <option>R$ 27</option>
-                <option>R$ 47</option>
-                <option>R$ 57</option>
-                <option>R$ 67</option>
-                <option>R$ 77</option>
-                <option>R$ 87</option>
-                <option>R$ 97</option>
+                <option>R$ 7</option><option>R$ 17</option><option>R$ 27</option>
+                <option>R$ 47</option><option>R$ 57</option><option>R$ 67</option>
+                <option>R$ 77</option><option>R$ 87</option><option>R$ 97</option>
                 <option>Outro</option>
               </select>
             </div>
@@ -392,43 +316,34 @@ textarea.t-area { min-height:200px; font-size:13px; line-height:1.65; }
           </div>
         </div>
 
-        <!-- TAB: TRANSCRIÇÕES -->
         <div class="tab-panel" id="tab-transcricoes">
           <div id="api-banner" class="api-banner">
             ⚠ Configure sua <a onclick="openApiModal()">Chave da API Gemini</a> antes de gerar documentos.
           </div>
-
           <div class="t-section">
             <div class="t-header">
               <span class="t-title">Ideia do Produto / Nome Sugerido</span>
               <span class="t-badge" style="background:var(--violet-dim);color:var(--violet)">Contexto</span>
             </div>
-            <input class="fc" id="t-ideia" type="text" placeholder="Ex: Método de posicionamento visual para profissionais liberais — R$ 27">
+            <input class="fc" id="t-ideia" type="text" placeholder="Ex: Método de posicionamento visual — R$ 27">
           </div>
-
           <div class="t-section">
             <div class="t-header">
               <span class="t-title">Transcrição da(s) Reunião(ões)</span>
               <span class="t-badge">Obrigatório</span>
             </div>
-            <textarea class="fc t-area" id="t-vendas" style="min-height:320px" placeholder="Cole aqui a transcrição completa — vendas, onboarding ou ambas..."></textarea>
+            <textarea class="fc" id="t-vendas" style="min-height:320px;resize:vertical;font-size:13px;line-height:1.65" placeholder="Cole aqui a transcrição completa..."></textarea>
           </div>
-
           <div class="gen-bar">
-            <div class="gen-bar-text">
-              Gere o <strong>Documento de Produto</strong> e a <strong>Ementa de Gravação</strong> com Gemini.
-            </div>
-            <button class="btn btn-success" id="btn-generate" onclick="generateDocuments()">
-              ✦ Gerar Documentos
-            </button>
+            <div class="gen-bar-text">Gere o <strong>Documento de Produto</strong> e a <strong>Ementa de Gravação</strong> com Gemini.</div>
+            <button class="btn btn-success" id="btn-generate" onclick="generateDocuments()">✦ Gerar Documentos</button>
           </div>
         </div>
 
-        <!-- TAB: DOCUMENTOS -->
         <div class="tab-panel" id="tab-documentos">
           <div class="gen-loading" id="gen-loading">
             <div class="spinner"></div>
-            <span style="font-size:13px;color:var(--text-secondary)">Gerando com Gemini... Isso pode levar alguns segundos.</span>
+            <span style="font-size:13px;color:var(--text-secondary)">Gerando com Gemini… Isso pode levar alguns segundos.</span>
           </div>
           <div class="docs-grid">
             <div class="doc-card">
@@ -436,22 +351,17 @@ textarea.t-area { min-height:200px; font-size:13px; line-height:1.65; }
                 <span class="doc-card-title">📄 Documento do Produto</span>
                 <button class="btn btn-ghost btn-sm" onclick="copyDoc('produto')">Copiar</button>
               </div>
-              <div class="doc-card-body empty" id="doc-produto">
-                Ainda não gerado.<br>Vá para Transcrições e clique em Gerar Documentos.
-              </div>
+              <div class="doc-card-body empty" id="doc-produto">Ainda não gerado.<br>Vá para Transcrições e clique em Gerar Documentos.</div>
             </div>
             <div class="doc-card">
               <div class="doc-card-head">
                 <span class="doc-card-title">🎬 Ementa de Gravação</span>
                 <button class="btn btn-ghost btn-sm" onclick="copyDoc('ementa')">Copiar</button>
               </div>
-              <div class="doc-card-body empty" id="doc-ementa">
-                Ainda não gerado.<br>Vá para Transcrições e clique em Gerar Documentos.
-              </div>
+              <div class="doc-card-body empty" id="doc-ementa">Ainda não gerado.<br>Vá para Transcrições e clique em Gerar Documentos.</div>
             </div>
           </div>
         </div>
-
       </div>
     </main>
   </div>
@@ -470,7 +380,7 @@ textarea.t-area { min-height:200px; font-size:13px; line-height:1.65; }
         <input class="fc" id="new-name" type="text" placeholder="Ex: João Silva">
       </div>
       <div class="fg" style="margin-bottom:14px">
-        <label>Nome do Produto <span style="font-weight:400;text-transform:none;letter-spacing:0">(pode preencher depois)</span></label>
+        <label>Nome do Produto</label>
         <input class="fc" id="new-product" type="text" placeholder="Ex: Método XYZ">
       </div>
       <div class="fg">
@@ -502,7 +412,7 @@ textarea.t-area { min-height:200px; font-size:13px; line-height:1.65; }
         <input class="fc" id="api-key-input" type="password" placeholder="AIza...">
       </div>
       <p style="font-size:12px;color:var(--text-muted);line-height:1.6">
-        Sua chave fica salva apenas localmente neste navegador, nunca é enviada a terceiros.<br>
+        Salva apenas localmente neste navegador.<br>
         Obtenha em: <strong style="color:var(--text-secondary)">aistudio.google.com → Get API Key</strong>
       </p>
     </div>
@@ -515,10 +425,16 @@ textarea.t-area { min-height:200px; font-size:13px; line-height:1.65; }
 
 <div id="toast"></div>
 
+<!-- Supabase SDK -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <script>
-// ─────────────────────────────────────────
-// PROMPT DO SISTEMA
-// ─────────────────────────────────────────
+// ─── CONFIG SUPABASE ─────────────────────────────────────
+const SUPABASE_URL  = 'https://tergtgfxvjtvlbvbzhss.supabase.co';
+const SUPABASE_KEY  = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRlcmd0Z2Z4dmp0dmxidmJ6aHNzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU2NTQ0NDUsImV4cCI6MjA5MTIzMDQ0NX0.HXQ3OYS_-E0eBht2ALpoce0earUgSo9TyuRNy9UXWMk';
+const supa = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+// ─── SYSTEM PROMPT ───────────────────────────────────────
 const SYSTEM_PROMPT = `Você é um copywriter extraordinário com os conhecimentos de Mark Ford, Jon Benson, Gary Halbert, Bencivenga, Russel Brunson, Frank Kern e Beto Altenhofen.
 
 Você é especialista em criar Micro-Ofertas de tickets de 7, 17, 27, 47, 57, 67, 77, 87 e 97 reais — produtos de baixo custo que mitiga os riscos do cliente e gera desejo de compra com base em uma promessa primária + mecanismo único.
@@ -578,270 +494,276 @@ Resumo: Regras da plataforma, direitos de uso do conteúdo e como funciona o sup
 Aula: Pesquisa de conteúdo
 Resumo: Formulário breve para entender o contexto, nicho e principais dificuldades do aluno.
 
-(Módulos Individuais — crie quantas aulas forem necessárias para cobrir o conteúdo do produto. Mínimo 5, máximo 12. A última aula deve SEMPRE ser o upsell.)
-
 Aula 1 - [Título] - [Tema]
 Resumo: [descrição curta do que será abordado nesta aula]
 
 Aula 2 - [Título] - [Tema]
 Resumo: [descrição curta do que será abordado nesta aula]
 
-[continue com quantas aulas forem necessárias para o produto]
+[continue com quantas aulas forem necessárias — mínimo 5, máximo 12]
 
 Aula [N] - A grande transformação: Próximo Passo/Upsell
-Resumo: Como unificar todo o aprendizado em um plano de ação. Convite para a mentoria/programa de alto ticket para quem deseja acompanhamento personalizado.
+Resumo: Como unificar todo o aprendizado em um plano de ação. Convite para a mentoria/programa de alto ticket.
 
 REGRA CRÍTICA: Separe os dois documentos EXATAMENTE com ---DOCUMENTO2--- para que o sistema divida corretamente.`;
 
-// ─────────────────────────────────────────
-// STATE
-// ─────────────────────────────────────────
+// ─── STATE ───────────────────────────────────────────────
 let state = {
-  clients: JSON.parse(localStorage.getItem('crm_clients') || '[]'),
+  clients: [],
   selectedId: null,
   activeTab: 'dados',
   generating: false,
-  apiKey: localStorage.getItem('gemini_api_key') || ''
+  apiKey: localStorage.getItem('gemini_api_key') || '',
+  userId: null
 };
 
-function persist() {
-  localStorage.setItem('crm_clients', JSON.stringify(state.clients));
+function getClient(id)  { return state.clients.find(c => c.id === id); }
+function getSelected()  { return getClient(state.selectedId); }
+function uid()          { return Date.now().toString(36) + Math.random().toString(36).slice(2,7); }
+function statusLabel(s) { return {onboarding:'Onboarding',producao:'Em Produção',entregue:'Entregue'}[s]||s; }
+
+// ─── AUTH ────────────────────────────────────────────────
+function setAuthTab(tab) {
+  const isLogin = tab === 'login';
+  document.getElementById('tab-login-btn').classList.toggle('active', isLogin);
+  document.getElementById('tab-reg-btn').classList.toggle('active', !isLogin);
+  document.getElementById('form-login').style.display    = isLogin ? '' : 'none';
+  document.getElementById('form-register').style.display = isLogin ? 'none' : '';
+  document.getElementById('auth-error').style.display   = 'none';
 }
 
-function getClient(id) {
-  return state.clients.find(c => c.id === id);
+function showAuthError(msg) {
+  const el = document.getElementById('auth-error');
+  el.style.display = 'block';
+  el.textContent   = msg;
 }
 
-function getSelected() {
-  return getClient(state.selectedId);
+async function doLogin() {
+  const email = document.getElementById('login-email').value.trim();
+  const pass  = document.getElementById('login-password').value;
+  if (!email || !pass) { showAuthError('Preencha e-mail e senha.'); return; }
+  const btn = document.getElementById('btn-login');
+  btn.disabled = true; btn.textContent = 'Entrando…';
+  const { error } = await supa.auth.signInWithPassword({ email, password: pass });
+  if (error) {
+    showAuthError(translateError(error.message));
+    btn.disabled = false; btn.textContent = 'Entrar';
+  }
 }
 
-function uid() {
-  return Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+async function doRegister() {
+  const email = document.getElementById('reg-email').value.trim();
+  const pass  = document.getElementById('reg-password').value;
+  const pass2 = document.getElementById('reg-password2').value;
+  if (!email)         { showAuthError('Preencha o e-mail.'); return; }
+  if (pass.length < 6){ showAuthError('Senha mínima de 6 caracteres.'); return; }
+  if (pass !== pass2) { showAuthError('As senhas não coincidem.'); return; }
+  const { error } = await supa.auth.signUp({ email, password: pass });
+  if (error) { showAuthError(translateError(error.message)); return; }
+  showAuthError('✅ Conta criada! Verifique seu e-mail para confirmar.');
+  document.getElementById('auth-error').style.color = 'var(--green)';
 }
 
-function statusLabel(s) {
-  return { onboarding: 'Onboarding', producao: 'Em Produção', entregue: 'Entregue' }[s] || s;
+function translateError(msg) {
+  if (msg.includes('Invalid login'))    return 'E-mail ou senha inválidos.';
+  if (msg.includes('already registered')) return 'Este e-mail já está em uso.';
+  if (msg.includes('Password'))         return 'Senha muito fraca (mínimo 6 caracteres).';
+  return msg;
 }
 
-// ─────────────────────────────────────────
-// SIDEBAR
-// ─────────────────────────────────────────
+async function doLogout() {
+  await supa.auth.signOut();
+  state.clients = []; state.selectedId = null; state.userId = null;
+  showScreen('login');
+}
+
+function showScreen(name) {
+  document.getElementById('screen-login').style.display = name === 'login' ? 'flex' : 'none';
+  const app = document.getElementById('app');
+  app.style.display = name === 'app' ? 'flex' : 'none';
+  if (name === 'app') app.style.flexDirection = 'column';
+}
+
+// ─── SUPABASE CRUD ───────────────────────────────────────
+async function loadClients() {
+  const { data, error } = await supa.from('clients')
+    .select('*').order('created_at', { ascending: false });
+  if (error) { toast('Erro ao carregar clientes.', 'error'); return; }
+  state.clients = data.map(r => ({
+    id: r.id, name: r.name, email: r.email||'', product: r.product||'',
+    ticket: r.ticket||'', status: r.status||'onboarding', niche: r.niche||'',
+    notes: r.notes||'', t_ideia: r.t_ideia||'', t_vendas: r.t_vendas||'',
+    doc_produto: r.doc_produto||'', doc_ementa: r.doc_ementa||'',
+    createdAt: r.created_at
+  }));
+}
+
+async function persist(c) {
+  const { error } = await supa.from('clients').upsert({
+    id: c.id, user_id: state.userId,
+    name: c.name, email: c.email, product: c.product,
+    ticket: c.ticket, status: c.status, niche: c.niche, notes: c.notes,
+    t_ideia: c.t_ideia, t_vendas: c.t_vendas,
+    doc_produto: c.doc_produto, doc_ementa: c.doc_ementa,
+    created_at: c.createdAt
+  });
+  if (error) toast('Erro ao salvar: ' + error.message, 'error');
+}
+
+async function removeClient(id) {
+  const { error } = await supa.from('clients').delete().eq('id', id);
+  if (error) toast('Erro ao excluir: ' + error.message, 'error');
+}
+
+// ─── SIDEBAR ─────────────────────────────────────────────
 function renderSidebar() {
   const list = document.getElementById('client-list');
+  if (!list) return;
   if (!state.clients.length) {
-    list.innerHTML = `<div style="padding:20px 12px;text-align:center;font-size:12px;color:var(--text-muted)">
-      Nenhum cliente ainda.<br>Clique em "+ Novo Cliente".
-    </div>`;
+    list.innerHTML = `<div style="padding:20px 12px;text-align:center;font-size:12px;color:var(--text-muted)">Nenhum cliente ainda.<br>Clique em "+ Novo Cliente".</div>`;
     return;
   }
   list.innerHTML = state.clients.map(c => `
-    <div class="client-item ${c.id === state.selectedId ? 'active' : ''}" onclick="selectClient('${c.id}')">
+    <div class="client-item ${c.id===state.selectedId?'active':''}" onclick="selectClient('${c.id}')">
       <div class="ci-avatar">${c.name.charAt(0).toUpperCase()}</div>
       <div class="ci-info">
         <div class="ci-name">${esc(c.name)}</div>
-        <div class="ci-sub">
-          <span class="dot dot-${c.status}"></span>
-          ${statusLabel(c.status)}${c.product ? ' · ' + esc(c.product) : ''}
-        </div>
+        <div class="ci-sub"><span class="dot dot-${c.status}"></span>${statusLabel(c.status)}${c.product?' · '+esc(c.product):''}</div>
       </div>
-    </div>
-  `).join('');
+    </div>`).join('');
 }
 
-// ─────────────────────────────────────────
-// SELECT CLIENT
-// ─────────────────────────────────────────
+// ─── CLIENT VIEW ─────────────────────────────────────────
 function selectClient(id) {
-  state.selectedId = id;
-  state.activeTab = 'dados';
-  renderSidebar();
-  renderClientView();
+  state.selectedId = id; state.activeTab = 'dados';
+  renderSidebar(); renderClientView();
 }
 
 function renderClientView() {
   const c = getSelected();
-  if (!c) {
-    document.getElementById('empty-state').style.display = '';
-    document.getElementById('client-view').style.display = 'none';
-    return;
-  }
-  document.getElementById('empty-state').style.display = 'none';
-  document.getElementById('client-view').style.display = 'flex';
-
+  document.getElementById('empty-state').style.display  = c ? 'none' : '';
+  document.getElementById('client-view').style.display  = c ? 'flex' : 'none';
+  if (!c) return;
   document.getElementById('cv-avatar').textContent = c.name.charAt(0).toUpperCase();
-  document.getElementById('cv-name').textContent = c.name;
-  document.getElementById('cv-meta').textContent = [statusLabel(c.status), c.product, c.ticket, c.niche].filter(Boolean).join(' · ');
-
-  document.getElementById('f-name').value    = c.name    || '';
-  document.getElementById('f-email').value   = c.email   || '';
-  document.getElementById('f-product').value = c.product || '';
-  document.getElementById('f-ticket').value  = c.ticket  || '';
-  document.getElementById('f-status').value  = c.status  || 'onboarding';
-  document.getElementById('f-niche').value   = c.niche   || '';
-  document.getElementById('f-notes').value   = c.notes   || '';
-
-  document.getElementById('t-ideia').value  = c.t_ideia  || '';
-  document.getElementById('t-vendas').value = c.t_vendas || '';
-
+  document.getElementById('cv-name').textContent   = c.name;
+  document.getElementById('cv-meta').textContent   = [statusLabel(c.status),c.product,c.ticket,c.niche].filter(Boolean).join(' · ');
+  document.getElementById('f-name').value    = c.name;
+  document.getElementById('f-email').value   = c.email;
+  document.getElementById('f-product').value = c.product;
+  document.getElementById('f-ticket').value  = c.ticket;
+  document.getElementById('f-status').value  = c.status;
+  document.getElementById('f-niche').value   = c.niche;
+  document.getElementById('f-notes').value   = c.notes;
+  document.getElementById('t-ideia').value   = c.t_ideia;
+  document.getElementById('t-vendas').value  = c.t_vendas;
   document.getElementById('api-banner').classList.toggle('hidden', !!state.apiKey);
-
   renderDocs(c);
   setTab(state.activeTab);
 }
 
 function renderDocs(c) {
+  const empty = 'Ainda não gerado.\nVá para Transcrições e clique em Gerar Documentos.';
   const pd = document.getElementById('doc-produto');
   const ed = document.getElementById('doc-ementa');
-  const empty = 'Ainda não gerado.\nVá para Transcrições e clique em Gerar Documentos.';
-
-  if (c.doc_produto) {
-    pd.classList.remove('empty');
-    pd.textContent = c.doc_produto;
-  } else {
-    pd.classList.add('empty');
-    pd.textContent = empty;
-  }
-  if (c.doc_ementa) {
-    ed.classList.remove('empty');
-    ed.textContent = c.doc_ementa;
-  } else {
-    ed.classList.add('empty');
-    ed.textContent = empty;
-  }
+  if (c.doc_produto) { pd.classList.remove('empty'); pd.textContent = c.doc_produto; }
+  else               { pd.classList.add('empty');    pd.textContent = empty; }
+  if (c.doc_ementa)  { ed.classList.remove('empty'); ed.textContent = c.doc_ementa; }
+  else               { ed.classList.add('empty');    ed.textContent = empty; }
 }
 
-// ─────────────────────────────────────────
-// TABS
-// ─────────────────────────────────────────
 function setTab(tab) {
   state.activeTab = tab;
-  document.querySelectorAll('.tab-btn').forEach(b =>
-    b.classList.toggle('active', b.dataset.tab === tab)
-  );
-  document.querySelectorAll('.tab-panel').forEach(p =>
-    p.classList.toggle('active', p.id === `tab-${tab}`)
-  );
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab===tab));
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.toggle('active', p.id===`tab-${tab}`));
 }
 
-// ─────────────────────────────────────────
-// CLIENT CRUD
-// ─────────────────────────────────────────
+// ─── CLIENT CRUD ─────────────────────────────────────────
 function openNewClientModal() {
-  document.getElementById('new-name').value    = '';
-  document.getElementById('new-product').value = '';
-  document.getElementById('new-status').value  = 'onboarding';
+  document.getElementById('new-name').value='';
+  document.getElementById('new-product').value='';
+  document.getElementById('new-status').value='onboarding';
   document.getElementById('modal-new-client').classList.remove('hidden');
-  setTimeout(() => document.getElementById('new-name').focus(), 50);
+  setTimeout(()=>document.getElementById('new-name').focus(),50);
 }
 
-function createClient() {
-  try {
-    const nameEl = document.getElementById('new-name');
-    const name = nameEl.value.trim();
-    if (!name) {
-      nameEl.style.borderColor = 'var(--red)';
-      nameEl.focus();
-      setTimeout(() => nameEl.style.borderColor = '', 2000);
-      toast('⚠ Preencha o nome do cliente antes de cadastrar.', 'error');
-      return;
-    }
-    const c = {
-      id: uid(),
-      name,
-      product:  document.getElementById('new-product').value.trim(),
-      status:   document.getElementById('new-status').value,
-      email: '', ticket: '', niche: '', notes: '',
-      t_vendas: '', t_onboard: '',
-      doc_produto: '', doc_ementa: '',
-      createdAt: new Date().toISOString()
-    };
-    state.clients.unshift(c);
-    persist();
-    closeModal('modal-new-client');
-    selectClient(c.id);
-    toast(`"${name}" cadastrado com sucesso!`, 'success');
-  } catch(e) {
-    alert('Erro ao cadastrar: ' + e.message);
-    console.error(e);
+async function createClient() {
+  const nameEl = document.getElementById('new-name');
+  const name   = nameEl.value.trim();
+  if (!name) {
+    nameEl.style.borderColor='var(--red)'; nameEl.focus();
+    setTimeout(()=>nameEl.style.borderColor='',2000);
+    toast('⚠ Preencha o nome.','error'); return;
   }
+  const c = {
+    id: uid(), name,
+    product: document.getElementById('new-product').value.trim(),
+    status:  document.getElementById('new-status').value,
+    email:'', ticket:'', niche:'', notes:'',
+    t_ideia:'', t_vendas:'', doc_produto:'', doc_ementa:'',
+    createdAt: new Date().toISOString()
+  };
+  state.clients.unshift(c);
+  closeModal('modal-new-client');
+  selectClient(c.id);
+  toast(`"${name}" cadastrado!`,'success');
+  await persist(c);
 }
 
-function saveClientData() {
-  const c = getSelected();
-  if (!c) return;
-  c.name    = document.getElementById('f-name').value.trim()    || c.name;
+async function saveClientData() {
+  const c = getSelected(); if (!c) return;
+  c.name    = document.getElementById('f-name').value.trim() || c.name;
   c.email   = document.getElementById('f-email').value.trim();
   c.product = document.getElementById('f-product').value.trim();
   c.ticket  = document.getElementById('f-ticket').value;
   c.status  = document.getElementById('f-status').value;
   c.niche   = document.getElementById('f-niche').value.trim();
   c.notes   = document.getElementById('f-notes').value.trim();
-  persist();
   renderSidebar();
-  document.getElementById('cv-name').textContent = c.name;
-  document.getElementById('cv-meta').textContent = [statusLabel(c.status), c.product, c.ticket, c.niche].filter(Boolean).join(' · ');
+  document.getElementById('cv-name').textContent   = c.name;
+  document.getElementById('cv-meta').textContent   = [statusLabel(c.status),c.product,c.ticket,c.niche].filter(Boolean).join(' · ');
   document.getElementById('cv-avatar').textContent = c.name.charAt(0).toUpperCase();
-  toast('Dados salvos!', 'success');
+  toast('Dados salvos!','success');
+  await persist(c);
 }
 
-function deleteClient() {
-  const c = getSelected();
-  if (!c) return;
-  if (!confirm(`Excluir "${c.name}"? Esta ação não pode ser desfeita.`)) return;
-  state.clients = state.clients.filter(x => x.id !== c.id);
+async function deleteClient() {
+  const c = getSelected(); if (!c) return;
+  if (!confirm(`Excluir "${c.name}"? Não pode ser desfeito.`)) return;
+  const id = c.id;
+  state.clients    = state.clients.filter(x=>x.id!==id);
   state.selectedId = null;
-  persist();
-  renderSidebar();
-  renderClientView();
-  toast('Cliente excluído.', 'success');
+  renderSidebar(); renderClientView();
+  toast('Cliente excluído.','success');
+  await removeClient(id);
 }
 
-// ─────────────────────────────────────────
-// SAVE TRANSCRIPTIONS (chamado antes de gerar)
-// ─────────────────────────────────────────
-function saveTranscriptions() {
-  const c = getSelected();
-  if (!c) return;
+async function saveTranscriptions() {
+  const c = getSelected(); if (!c) return;
   c.t_ideia  = document.getElementById('t-ideia').value;
   c.t_vendas = document.getElementById('t-vendas').value;
-  persist();
+  await persist(c);
 }
 
-// ─────────────────────────────────────────
-// GEMINI — GERAR DOCUMENTOS
-// ─────────────────────────────────────────
+// ─── GEMINI ──────────────────────────────────────────────
 async function generateDocuments() {
   if (state.generating) return;
-  const c = getSelected();
-  if (!c) return;
-
-  saveTranscriptions();
-
-  if (!state.apiKey) {
-    openApiModal();
-    toast('Configure sua Chave API Gemini primeiro.', 'error');
-    return;
-  }
+  const c = getSelected(); if (!c) return;
+  await saveTranscriptions();
+  if (!state.apiKey) { openApiModal(); toast('Configure a Chave API Gemini primeiro.','error'); return; }
   const vendas = document.getElementById('t-vendas').value.trim();
-  if (!vendas) {
-    toast('A transcrição da reunião de vendas é obrigatória.', 'error');
-    return;
-  }
+  if (!vendas) { toast('A transcrição é obrigatória.','error'); return; }
 
   state.generating = true;
   const btn = document.getElementById('btn-generate');
-  btn.disabled = true;
-  btn.innerHTML = '<div class="spinner" style="width:14px;height:14px;border-width:2px"></div> Gerando...';
-
+  btn.disabled=true; btn.innerHTML='<div class="spinner" style="width:14px;height:14px;border-width:2px"></div> Gerando…';
   setTab('documentos');
-  document.getElementById('gen-loading').style.display = 'flex';
+  document.getElementById('gen-loading').style.display='flex';
 
-  const ideia = document.getElementById('t-ideia').value.trim();
+  const ideia   = document.getElementById('t-ideia').value.trim();
   const userMsg = `ESPECIALISTA / CLIENTE: ${c.name}
-NICHO / MERCADO: ${c.niche || 'A definir'}
-TICKET SUGERIDO: ${c.ticket || 'A definir'}
-${ideia ? `IDEIA DO PRODUTO / NOME SUGERIDO: ${ideia}` : 'IDEIA DO PRODUTO: Extrair da transcrição'}
+NICHO / MERCADO: ${c.niche||'A definir'}
+TICKET SUGERIDO: ${c.ticket||'A definir'}
+${ideia?`IDEIA DO PRODUTO: ${ideia}`:'IDEIA DO PRODUTO: Extrair da transcrição'}
 
 TRANSCRIÇÃO:
 ${vendas}`;
@@ -849,109 +771,87 @@ ${vendas}`;
   try {
     const resp = await fetch(
       `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${state.apiKey}`,
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      { method:'POST', headers:{'Content-Type':'application/json'},
         body: JSON.stringify({
-          system_instruction: { parts: [{ text: SYSTEM_PROMPT }] },
-          contents: [{ role: 'user', parts: [{ text: userMsg }] }],
-          generationConfig: { temperature: 0.7, maxOutputTokens: 8192 }
+          system_instruction:{parts:[{text:SYSTEM_PROMPT}]},
+          contents:[{role:'user',parts:[{text:userMsg}]}],
+          generationConfig:{temperature:0.7,maxOutputTokens:8192}
         })
       }
     );
-
-    if (!resp.ok) {
-      const err = await resp.json().catch(() => ({}));
-      throw new Error(err.error?.message || `Erro HTTP ${resp.status}`);
-    }
-
-    const data = await resp.json();
-    const raw  = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
-
+    if (!resp.ok) { const e=await resp.json().catch(()=>({})); throw new Error(e.error?.message||`HTTP ${resp.status}`); }
+    const data  = await resp.json();
+    const raw   = data.candidates?.[0]?.content?.parts?.[0]?.text||'';
     const split = raw.split('---DOCUMENTO2---');
-    c.doc_produto = split[0]?.trim() || raw.trim();
-    c.doc_ementa  = split[1]?.trim() || '';
-
-    persist();
+    c.doc_produto = split[0]?.trim()||raw.trim();
+    c.doc_ementa  = split[1]?.trim()||'';
     renderDocs(c);
-    toast('Documentos gerados com sucesso!', 'success');
-  } catch (e) {
-    toast(`Erro: ${e.message}`, 'error');
-    console.error(e);
-    setTab('transcricoes');
+    toast('Documentos gerados!','success');
+    await persist(c);
+  } catch(e) {
+    toast(`Erro: ${e.message}`,'error'); setTab('transcricoes');
   } finally {
-    state.generating = false;
-    btn.disabled = false;
-    btn.innerHTML = '✦ Gerar Documentos';
-    document.getElementById('gen-loading').style.display = 'none';
+    state.generating=false; btn.disabled=false; btn.innerHTML='✦ Gerar Documentos';
+    document.getElementById('gen-loading').style.display='none';
   }
 }
 
-// ─────────────────────────────────────────
-// COPIAR DOCUMENTO
-// ─────────────────────────────────────────
 function copyDoc(which) {
-  const c = getSelected();
-  if (!c) return;
-  const text = which === 'produto' ? c.doc_produto : c.doc_ementa;
-  if (!text) { toast('Nenhum conteúdo para copiar.', 'error'); return; }
-  navigator.clipboard.writeText(text).then(() => toast('Copiado!', 'success'));
+  const c=getSelected(); if (!c) return;
+  const text = which==='produto'?c.doc_produto:c.doc_ementa;
+  if (!text){toast('Nenhum conteúdo.','error');return;}
+  navigator.clipboard.writeText(text).then(()=>toast('Copiado!','success'));
 }
 
-// ─────────────────────────────────────────
-// API KEY
-// ─────────────────────────────────────────
+// ─── API KEY ─────────────────────────────────────────────
 function openApiModal() {
-  document.getElementById('api-key-input').value = state.apiKey;
+  document.getElementById('api-key-input').value=state.apiKey;
   document.getElementById('modal-api').classList.remove('hidden');
 }
-
 function saveApiKey() {
-  const key = document.getElementById('api-key-input').value.trim();
-  state.apiKey = key;
-  localStorage.setItem('gemini_api_key', key);
+  const key=document.getElementById('api-key-input').value.trim();
+  state.apiKey=key; localStorage.setItem('gemini_api_key',key);
   closeModal('modal-api');
-  const banner = document.getElementById('api-banner');
-  if (banner) banner.classList.toggle('hidden', !!key);
-  toast('Chave salva!', 'success');
+  document.getElementById('api-banner')?.classList.toggle('hidden',!!key);
+  toast('Chave salva!','success');
 }
 
-// ─────────────────────────────────────────
-// MODAIS
-// ─────────────────────────────────────────
-function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
-
-document.querySelectorAll('.modal-overlay').forEach(o => {
-  o.addEventListener('click', e => { if (e.target === o) o.classList.add('hidden'); });
+// ─── MODALS ──────────────────────────────────────────────
+function closeModal(id){document.getElementById(id).classList.add('hidden');}
+document.querySelectorAll('.modal-overlay').forEach(o=>{
+  o.addEventListener('click',e=>{if(e.target===o)o.classList.add('hidden');});
 });
+document.getElementById('new-name').addEventListener('keydown',e=>{if(e.key==='Enter')createClient();});
 
-document.getElementById('new-name').addEventListener('keydown', e => {
-  if (e.key === 'Enter') createClient();
-});
-
-// ─────────────────────────────────────────
-// TOAST
-// ─────────────────────────────────────────
+// ─── TOAST ───────────────────────────────────────────────
 let toastTimer;
-function toast(msg, type = '') {
-  const el = document.getElementById('toast');
-  el.textContent = msg;
-  el.className = `show ${type}`;
+function toast(msg,type=''){
+  const el=document.getElementById('toast');
+  el.textContent=msg; el.className=`show ${type}`;
   clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => el.classList.remove('show'), 3000);
+  toastTimer=setTimeout(()=>el.classList.remove('show'),3000);
 }
 
-// ─────────────────────────────────────────
-// UTIL
-// ─────────────────────────────────────────
-function esc(s) {
-  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 
-// ─────────────────────────────────────────
-// INIT
-// ─────────────────────────────────────────
-renderSidebar();
+// ─── INIT ────────────────────────────────────────────────
+supa.auth.onAuthStateChange(async (event, session) => {
+  if (session?.user) {
+    state.userId = session.user.id;
+    document.getElementById('user-email-display').textContent = session.user.email;
+    state.apiKey = localStorage.getItem('gemini_api_key') || '';
+    await loadClients();
+    showScreen('app');
+    renderSidebar();
+    renderClientView();
+  } else {
+    showScreen('login');
+  }
+});
+
+supa.auth.getSession().then(({ data: { session } }) => {
+  if (!session) showScreen('login');
+});
 </script>
 </body>
 </html>
