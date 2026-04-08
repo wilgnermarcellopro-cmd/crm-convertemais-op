@@ -521,6 +521,14 @@ async function doLogin() {
   if (error) {
     showAuthError(translateError(error.message));
     btn.disabled = false; btn.textContent = 'Entrar';
+  } else {
+    // sucesso — onAuthStateChange vai redirecionar
+    setTimeout(() => {
+      if (document.getElementById('screen-login').style.display !== 'none') {
+        btn.disabled = false; btn.textContent = 'Entrar';
+        showAuthError('Erro ao carregar. Tente novamente.');
+      }
+    }, 5000);
   }
 }
 
@@ -808,13 +816,14 @@ supa.auth.onAuthStateChange(async (event, session) => {
   if (session?.user) {
     state.userId = session.user.id;
     document.getElementById('user-email-display').textContent = session.user.email;
-    state.apiKey = '';
-    await loadClients();
+    try { await loadClients(); } catch(e) { console.error('loadClients:', e); }
     showScreen('app');
     renderSidebar();
     renderClientView();
   } else {
     showScreen('login');
+    const btn = document.getElementById('btn-login');
+    if (btn) { btn.disabled = false; btn.textContent = 'Entrar'; }
   }
 });
 
