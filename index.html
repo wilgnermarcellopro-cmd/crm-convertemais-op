@@ -408,18 +408,10 @@ textarea.t-area { min-height:200px; font-size:13px; line-height:1.65; }
 
           <div class="t-section">
             <div class="t-header">
-              <span class="t-title">Reunião de Vendas</span>
+              <span class="t-title">Transcrição da(s) Reunião(ões)</span>
               <span class="t-badge">Obrigatório</span>
             </div>
-            <textarea class="fc t-area" id="t-vendas" placeholder="Cole aqui a transcrição completa da reunião de vendas..."></textarea>
-          </div>
-
-          <div class="t-section">
-            <div class="t-header">
-              <span class="t-title">Reunião de Onboarding</span>
-              <span class="t-badge" style="background:var(--green-dim);color:var(--green)">Opcional</span>
-            </div>
-            <textarea class="fc t-area" id="t-onboard" placeholder="Cole aqui a transcrição da reunião de onboarding (se disponível)..."></textarea>
+            <textarea class="fc t-area" id="t-vendas" style="min-height:320px" placeholder="Cole aqui a transcrição completa — vendas, onboarding ou ambas..."></textarea>
           </div>
 
           <div class="gen-bar">
@@ -689,9 +681,8 @@ function renderClientView() {
   document.getElementById('f-niche').value   = c.niche   || '';
   document.getElementById('f-notes').value   = c.notes   || '';
 
-  document.getElementById('t-ideia').value   = c.t_ideia   || '';
-  document.getElementById('t-vendas').value  = c.t_vendas  || '';
-  document.getElementById('t-onboard').value = c.t_onboard || '';
+  document.getElementById('t-ideia').value  = c.t_ideia  || '';
+  document.getElementById('t-vendas').value = c.t_vendas || '';
 
   document.getElementById('api-banner').classList.toggle('hidden', !!state.apiKey);
 
@@ -812,9 +803,8 @@ function deleteClient() {
 function saveTranscriptions() {
   const c = getSelected();
   if (!c) return;
-  c.t_ideia   = document.getElementById('t-ideia').value;
-  c.t_vendas  = document.getElementById('t-vendas').value;
-  c.t_onboard = document.getElementById('t-onboard').value;
+  c.t_ideia  = document.getElementById('t-ideia').value;
+  c.t_vendas = document.getElementById('t-vendas').value;
   persist();
 }
 
@@ -847,17 +837,14 @@ async function generateDocuments() {
   setTab('documentos');
   document.getElementById('gen-loading').style.display = 'flex';
 
-  const onboard = document.getElementById('t-onboard').value.trim();
-  const ideia   = document.getElementById('t-ideia').value.trim();
+  const ideia = document.getElementById('t-ideia').value.trim();
   const userMsg = `ESPECIALISTA / CLIENTE: ${c.name}
 NICHO / MERCADO: ${c.niche || 'A definir'}
 TICKET SUGERIDO: ${c.ticket || 'A definir'}
 ${ideia ? `IDEIA DO PRODUTO / NOME SUGERIDO: ${ideia}` : 'IDEIA DO PRODUTO: Extrair da transcrição'}
 
-TRANSCRIÇÃO — REUNIÃO DE VENDAS:
-${vendas}
-
-${onboard ? `TRANSCRIÇÃO — REUNIÃO DE ONBOARDING:\n${onboard}` : '(Reunião de onboarding ainda não realizada)'}`;
+TRANSCRIÇÃO:
+${vendas}`;
 
   try {
     const resp = await fetch(
