@@ -637,7 +637,7 @@ function renderClientView() {
   document.getElementById('f-notes').value   = c.notes;
   document.getElementById('t-ideia').value   = c.t_ideia;
   document.getElementById('t-vendas').value  = c.t_vendas;
-  document.getElementById('api-banner').classList.toggle('hidden', !!state.apiKey);
+  document.getElementById('api-banner')?.classList.toggle('hidden', !!state.apiKey);
   renderDocs(c);
   setTab(state.activeTab);
 }
